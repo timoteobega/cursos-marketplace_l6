@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegisteredEmail;
 
 class RegisterController extends Controller
 {
@@ -29,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::STORE;
 
     /**
      * Create a new controller instance.
@@ -68,6 +71,26 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'ROLE_USER'//explicito aqui apesar de ja estar defaul no BD - admin - ROLE_OWNER
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        Mail::to('timoteobega@gmail.com')->send(new UserRegisteredEmail($user));
+
+        if($user->role == 'ROLE_OWNER')
+            return redirect()->route('admin.store.index');
+
+        if($user->role == 'ROLE_USER' && session()->has('cart'))
+        {
+            return redirect()->route('checkout.index');
+        }
+        else
+        {
+            return redirect()->route('home');
+        }
+
+        return null;
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e4a9dd2476552506dba12be3b05aeec",
+    "content-hash": "e9fe9869a91f05c0c56248b9108970de",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -366,6 +366,64 @@
                 "source": "https://github.com/fideloper/TrustedProxy/tree/4.4.1"
             },
             "time": "2020-10-22T13:48:01+00:00"
+        },
+        {
+            "name": "laracasts/flash",
+            "version": "3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laracasts/flash.git",
+                "reference": "76c2e200498795bdbeda97b682536130316e8b97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laracasts/flash/zipball/76c2e200498795bdbeda97b682536130316e8b97",
+                "reference": "76c2e200498795bdbeda97b682536130316e8b97",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0|^6.0|^7.0|^8.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laracasts\\Flash\\FlashServiceProvider"
+                    ],
+                    "aliases": {
+                        "Flash": "Laracasts\\Flash\\Flash"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Laracasts\\Flash": "src/"
+                },
+                "files": [
+                    "src/Laracasts/Flash/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeffrey Way",
+                    "email": "jeffrey@laracasts.com"
+                }
+            ],
+            "description": "Easy flash notifications",
+            "support": {
+                "issues": "https://github.com/laracasts/flash/issues",
+                "source": "https://github.com/laracasts/flash/tree/master"
+            },
+            "time": "2020-09-07T13:25:35+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1155,30 +1213,79 @@
             "time": "2021-04-09T13:42:10+00:00"
         },
         {
-            "name": "paragonie/random_compat",
-            "version": "v9.99.100",
+            "name": "pagseguro/pagseguro-php-sdk",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a"
+                "url": "https://github.com/pagseguro/pagseguro-php-sdk.git",
+                "reference": "de63ce3d582ba5727c42d8d4e67030da9439bff6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/996434e5492cb4c3edcb9168db6fbb1359ef965a",
-                "reference": "996434e5492cb4c3edcb9168db6fbb1359ef965a",
+                "url": "https://api.github.com/repos/pagseguro/pagseguro-php-sdk/zipball/de63ce3d582ba5727c42d8d4e67030da9439bff6",
+                "reference": "de63ce3d582ba5727c42d8d4e67030da9439bff6",
                 "shasum": ""
             },
             "require": {
-                "php": ">= 7"
+                "ext-curl": "*",
+                "lib-curl": "*",
+                "lib-openssl": "*",
+                "php": "^7.1.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*|5.*",
-                "vimeo/psalm": "^1"
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PagSeguro\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "PagSeguro"
+                }
+            ],
+            "description": "Biblioteca de integração com o PagSeguro",
+            "support": {
+                "issues": "https://github.com/pagseguro/pagseguro-php-sdk/issues",
+                "source": "https://github.com/pagseguro/pagseguro-php-sdk/tree/6.0.0"
+            },
+            "time": "2018-12-11T11:37:37+00:00"
+        },
+        {
+            "name": "paragonie/random_compat",
+            "version": "v2.0.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paragonie/random_compat.git",
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*|5.*"
             },
             "suggest": {
                 "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
             },
             "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/random.php"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1202,7 +1309,7 @@
                 "issues": "https://github.com/paragonie/random_compat/issues",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2020-10-15T08:29:30+00:00"
+            "time": "2021-04-17T09:33:01+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -1499,48 +1606,44 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.9.6",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "ffa80ab953edd85d5b6c004f96181a538aad35a3"
+                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/ffa80ab953edd85d5b6c004f96181a538aad35a3",
-                "reference": "ffa80ab953edd85d5b6c004f96181a538aad35a3",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "paragonie/random_compat": "^1 | ^2 | ^9.99.99",
-                "php": "^5.4 | ^7.0 | ^8.0",
-                "symfony/polyfill-ctype": "^1.8"
+                "paragonie/random_compat": "^1.0|^2.0",
+                "php": "^5.4 || ^7.0"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
             },
             "require-dev": {
-                "codeception/aspect-mock": "^1 | ^2",
-                "doctrine/annotations": "^1.2",
-                "goaop/framework": "1.0.0-alpha.2 | ^1 | >=2.1.0 <=2.3.2",
-                "mockery/mockery": "^0.9.11 | ^1",
+                "apigen/apigen": "^4.1",
+                "codeception/aspect-mock": "^1.0 | ^2.0",
+                "doctrine/annotations": "~1.2.0",
+                "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
+                "ircmaxell/random-lib": "^1.1",
+                "jakub-onderka/php-parallel-lint": "^0.9.0",
+                "mockery/mockery": "^0.9.4",
                 "moontoast/math": "^1.1",
-                "nikic/php-parser": "<=4.5.0",
-                "paragonie/random-lib": "^2",
-                "php-mock/php-mock-phpunit": "^0.3 | ^1.1 | ^2.6",
-                "php-parallel-lint/php-parallel-lint": "^1.3",
-                "phpunit/phpunit": ">=4.8.36 <9.0.0 | >=9.3.0",
-                "squizlabs/php_codesniffer": "^3.5",
-                "yoast/phpunit-polyfills": "^1.0"
+                "php-mock/php-mock-phpunit": "^0.3|^1.1",
+                "phpunit/phpunit": "^4.7|>=5.0 <5.4",
+                "satooshi/php-coveralls": "^0.6.1",
+                "squizlabs/php_codesniffer": "^2.3"
             },
             "suggest": {
-                "ext-ctype": "Provides support for PHP Ctype functions",
                 "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
-                "ext-openssl": "Provides the OpenSSL extension for use with the OpenSslGenerator",
                 "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
+                "ircmaxell/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
                 "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
-                "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
                 "ramsey/uuid-console": "A console application for generating UUIDs with ramsey/uuid",
                 "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
             },
@@ -1553,10 +1656,7 @@
             "autoload": {
                 "psr-4": {
                     "Ramsey\\Uuid\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1586,9 +1686,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "rss": "https://github.com/ramsey/uuid/releases.atom",
-                "source": "https://github.com/ramsey/uuid",
-                "wiki": "https://github.com/ramsey/uuid/wiki"
+                "source": "https://github.com/ramsey/uuid"
             },
             "funding": [
                 {
@@ -1600,7 +1698,59 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-25T23:07:42+00:00"
+            "time": "2017-08-04T13:39:04+00:00"
+        },
+        {
+            "name": "spatie/laravel-sluggable",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-sluggable.git",
+                "reference": "04f6921a36d90acb01df433bc374a5f9c2a76734"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/04f6921a36d90acb01df433bc374a5f9c2a76734",
+                "reference": "04f6921a36d90acb01df433bc374a5f9c2a76734",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^6.0",
+                "illuminate/support": "^6.0",
+                "php": "^7.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Sluggable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate slugs when saving Eloquent models",
+            "homepage": "https://github.com/spatie/laravel-sluggable",
+            "keywords": [
+                "laravel-sluggable",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-sluggable/issues",
+                "source": "https://github.com/spatie/laravel-sluggable/tree/master"
+            },
+            "time": "2019-12-06T10:02:18+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4312,6 +4462,60 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "21dc7e58896db977aad246e710b4810aaab9a968"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/21dc7e58896db977aad246e710b4810aaab9a968",
+                "reference": "21dc7e58896db977aad246e710b4810aaab9a968",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.8|^6.0",
+                "illuminate/filesystem": "~5.8|^6.0",
+                "illuminate/support": "~5.8|^6.0",
+                "php": "^7.1.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/ui/issues",
+                "source": "https://github.com/laravel/ui/tree/v1.3.0"
+            },
+            "time": "2020-11-03T19:38:34+00:00"
         },
         {
             "name": "mockery/mockery",
