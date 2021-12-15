@@ -1,4 +1,4 @@
-function processPayment(token)
+function processPayment(token, buttonTarget)
 {
     let data = {
         card_token: token,
@@ -7,9 +7,6 @@ function processPayment(token)
         card_name: document.querySelector('input[name=card_name]').value,
         _token: csrf
     };
-
-    //console.info('urlProccess',urlProccess);
-    console.info('data',data);
 
     $.ajax({
         type: 'POST',
@@ -21,8 +18,12 @@ function processPayment(token)
             window.location.href = `${urlThanks}?order=${res.data.order}`;
         },
         error: function (err) {
-            toastr.error('Não foi possível confirmar a transação','Erro');
-            console.error('processPayment', err);
+            let message = JSON.parse(err.responseText);
+
+            buttonTarget.disabled = false;
+            buttonTarget.innerHTML = 'Efetuar pagamento';
+            document.querySelector('div.msg').innerHTML = showErrorMessages(message.data.message.error.message);
+            toastr.error('Não foi possível confirmar a transação','Atenção');
         }
     });
 }
@@ -53,4 +54,44 @@ function drawSelectInstallments(installments) {
 
     select += '</select>';
     return select;
+}
+
+function showErrorMessages(message)
+{
+    return `
+        <div class="alert alert-danger">${message}<div>
+    `;
+}
+
+function errorsMapPagSeguro(code)
+{
+    switch(code) {
+        case "10000":
+            return 'Bandeira do cartão inválida!';
+            break;
+
+        case "10001":
+            return 'Número do Cartão com tamanho inválido!';
+            break;
+
+        case "10002":
+        case  "30405":
+            return 'Data com formato inválido!';
+            break;
+
+        case "10003":
+            return 'Código de segurança inválido';
+            break;
+
+        case "10004":
+            return 'Código de segurança é obrigatório!';
+            break;
+
+        case "10006":
+            return 'Tamanho do código de segurança inválido!';
+            break;
+
+        default:
+            return 'Houve um erro na validação do seu cartão de crédito!';
+    }
 }

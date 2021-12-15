@@ -13,26 +13,32 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        if (!auth()->check()) {
-            return redirect()->route('login');
+        try {
+            if (!auth()->check()) {
+                return redirect()->route('login');
+            }
+
+            $this->makePagSeguroSession();
+
+            $cartItems = array_map(function ($line) {
+                return $line['amount'] * $line['price'];
+            }, session()->get('cart'));
+
+            $cartItems = array_sum($cartItems);
+
+            return view('checkout', compact('cartItems'));
+
+        } catch (\Exception $e) {
+            session()->forget('pagseguro_session_code');
+            redirect()->route('checkout.index');
         }
-
-        $this->makePagSeguroSession();
-
-        $cartItems = array_map(function($line){
-            return $line['amount'] * $line['price'];
-        }, session()->get('cart'));
-
-        $cartItems = array_sum($cartItems);
-
-        return view('checkout',compact('cartItems'));
     }
 
     public function proccess(Request $request)
     {
         try {
             $cartItems = session()->get('cart');
-            $stores = array_unique(array_column($cartItems,'store_id'));
+            $stores = array_unique(array_column($cartItems, 'store_id'));
             $user = auth()->user();
             $dataPost = $request->all();
             $reference = Uuid::uuid4();
@@ -41,10 +47,10 @@ class CheckoutController extends Controller
             $result = $creditCardPayment->doPayment();
 
             $userOrder = [
-                'reference'         => $reference,
-                'pagseguro_code'    => $result->getCode(),
-                'pagseguro_status'  => $result->getStatus(),
-                'items'             => serialize($cartItems),
+                'reference' => $reference,
+                'pagseguro_code' => $result->getCode(),
+                'pagseguro_status' => $result->getStatus(),
+                'items' => serialize($cartItems),
             ];
 
             $userOrder = $user->orders()->create($userOrder);
@@ -56,24 +62,24 @@ class CheckoutController extends Controller
 
             return response()->json([
                 'data' => [
-                    'status'    => true,
-                    'message'   => 'Pedido criado com sucesso!!!',
-                    'order'     => $reference
+                    'status' => true,
+                    'message' => 'Pedido criado com sucesso!!!',
+                    'order' => $reference
                 ]
-            ],200);
-        } catch (\Exception $e)
-        {
-            $message = env('APP_DEBUG') ? $e->getMessage() : 'Erro ao processar pedido';
+            ], 200);
+        } catch (\Exception $e) {
+            $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido';
             return response()->json([
                 'data' => [
-                    'status'    => false,
-                    'message'   => $message
+                    'status' => false,
+                    'message' => $message
                 ]
             ], 401);
         }
     }
 
-    public function thanks(){
+    public function thanks()
+    {
         return view('thanks');
     }
 
@@ -88,15 +94,15 @@ class CheckoutController extends Controller
                 'pagseguro_status' => $notification->getStatus()
             ]);
 
-            if($notification->getStatus() == 3)//Pago
+            if ($notification->getStatus() == 3)//Pago
             {
                 //
             }
 
-            return response()->json([],204);
+            return response()->json([], 204);
         } catch (\Exception $e) {
-            $message = env['APP_DEBUG'] ? $e->getMessage() : '';
-            return response()->json([$message],500);
+            $message = env['APP_DEBUG'] ? simplexml_load_string($e->getMessage()) : '';
+            return response()->json([$message], 500);
         }
     }
 
