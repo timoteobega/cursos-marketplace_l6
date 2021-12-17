@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment\PagSeguro\CreditCard;
+use App\Payment\PagSeguro\Boleto;
 use App\Payment\PagSeguro\Notification;
 use App\Store;
 use App\UserOrder;
@@ -43,14 +44,18 @@ class CheckoutController extends Controller
             $dataPost = $request->all();
             $reference = Uuid::uuid4();
 
-            $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
-            $result = $creditCardPayment->doPayment();
+            $payment = $dataPost['paymentType'] == 'BOLETO'
+                ? new Boleto($cartItems, $user, $reference, $dataPost['hash'])
+                : new CreditCard($cartItems, $user, $dataPost, $reference);
+            $result = $payment->doPayment();
 
             $userOrder = [
                 'reference' => $reference,
                 'pagseguro_code' => $result->getCode(),
                 'pagseguro_status' => $result->getStatus(),
                 'items' => serialize($cartItems),
+                //'type' => $dataPost['paymentType'],
+                //'link_boleto' => $result->getPaymentLink()
             ];
 
             $userOrder = $user->orders()->create($userOrder);
@@ -60,13 +65,18 @@ class CheckoutController extends Controller
             session()->forget('cart');
             session()->forget('pagseguro_session_code');
 
+            $dataJson = [
+                'status' => true,
+                'message' => 'Pedido criado com sucesso!!!',
+                'order' => $reference
+            ];
+
+            if($dataPost['paymentType']) $dataJson['link_boleto'] = $result->getPaymentLink();
+
             return response()->json([
-                'data' => [
-                    'status' => true,
-                    'message' => 'Pedido criado com sucesso!!!',
-                    'order' => $reference
-                ]
+                'data' => $dataJson
             ], 200);
+
         } catch (\Exception $e) {
             $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido';
             return response()->json([
